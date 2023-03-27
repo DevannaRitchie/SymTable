@@ -61,7 +61,6 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
     struct node *p;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-    assert(pvValue != NULL);
     /* loops through all the nodes in search for pcKey*/
     for (p = oSymTable->first; p != NULL; p = p -> nextNode) {
         if (strcmp(p->key, pcKey) == 0) {
