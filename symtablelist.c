@@ -1,3 +1,7 @@
+/*--------------------------------------------------------------------*/
+/* symtablelist.c                                                             */
+/* Author: Devanna Ritchie                                            */
+/*--------------------------------------------------------------------*/
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,9 +12,12 @@
 /* node structure which contains pointer to the defensive copy of the key,
 the pointer to the client's value, and the pointer to the next node in the list*/
 struct node {
-    const char *key; /* pointer to the defensive copy of the key*/
-    const void *value; /* pointer to the client's value*/
-    struct node *nextNode; /* pointer to the next node*/
+    /* pointer to the defensive copy of the key*/
+    const char *key; 
+    /* pointer to the client's value*/
+    const void *value;
+    /* pointer to the next node*/
+    struct node *nextNode;
 };
 
 /* SymTable structure that contains the pointer to the first node of the list 
