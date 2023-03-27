@@ -5,12 +5,16 @@
 #include "symtable.h"
 
 
+/* node structure which contains pointer to the defensive copy of the key,
+the pointer to the client's value, and the pointer to the next node in the list*/
 struct node {
     const char *key; /* pointer to the defensive copy of the key*/
     const void *value; /* pointer to the client's value*/
     struct node *nextNode; /* pointer to the next node*/
 };
 
+/* SymTable structure that contains the pointer to the first node of the list 
+and the length of the symbol table*/
 struct SymTable {
    /* The address of the first node. */
   struct node *first;
@@ -24,7 +28,7 @@ struct SymTable {
 SymTable_T SymTable_new(void) {
     SymTable_T oSymTable;
     
-/* allocate space for the managing structure*/
+/* allocate space for the managing structure */
    oSymTable = (SymTable_T) malloc(sizeof(struct SymTable));
    if (oSymTable == NULL)
       return NULL;
@@ -58,49 +62,51 @@ size_t SymTable_getLength(SymTable_T oSymTable) {
 }
 
 int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
-    struct node *p;
+    struct node *currentNode;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
     /* loops through all the nodes in search for pcKey*/
-    for (p = oSymTable->first; p != NULL; p = p -> nextNode) {
-        if (strcmp(p->key, pcKey) == 0) {
+    for (currentNode = oSymTable->first; currentNode != NULL; 
+            currentNode = currentNode -> nextNode) {
+        if (strcmp(currentNode->key, pcKey) == 0) {
             return 0;
         } 
     }
     /*new key found*/
     /* allocating enough space for new node*/
-    p = (struct node*) malloc(sizeof(struct node));
+    currentNode = (struct node*) malloc(sizeof(struct node));
 
-    if (p == NULL) {
+    if (currentNode == NULL) {
         return 0;
     }
-    p->key = (char*) malloc(strlen(pcKey) + 1);
-    if (p->key == NULL) {
-        free(p);
+    currentNode->key = (char*) malloc(strlen(pcKey) + 1);
+    if (currentNode->key == NULL) {
+        free(currentNode);
         return 0;
     }
     /*ready to fill the node*/
-    p->key = strcpy((char*) p->key, pcKey);
-    p->value = pvValue;
+    currentNode->key = strcpy((char*) currentNode->key, pcKey);
+    currentNode->value = pvValue;
     /* adds p to the beginning of the list*/
-    p->nextNode = oSymTable->first;
-    oSymTable->first = p;
+    currentNode->nextNode = oSymTable->first;
+    oSymTable->first = currentNode;
     oSymTable->length++;
     return 1;
 }
 
 void *SymTable_replace(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
     /* traveling node*/
-    struct node *p;
+    struct node *currentNode;
     const void* oldValue;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
 /* loops through all the nodes in search for pcKey*/
-for (p = oSymTable->first; p != NULL; p = p -> nextNode) {
-        if (strcmp(p->key, pcKey) == 0) {
-            oldValue = p->value;
-            p->value = pvValue;
+for (currentNode = oSymTable->first; currentNode != NULL; 
+        currentNode = currentNode -> nextNode) {
+        if (strcmp(currentNode->key, pcKey) == 0) {
+            oldValue = currentNode->value;
+            currentNode->value = pvValue;
             return (void*) oldValue;
         } 
     }
@@ -109,12 +115,13 @@ for (p = oSymTable->first; p != NULL; p = p -> nextNode) {
 }
 
 int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
-    struct node *p;
+    struct node *currentNode;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
-    for (p = oSymTable->first; p != NULL; p = p -> nextNode) {
-        if (strcmp(p->key, pcKey) == 0) {
+    for (currentNode = oSymTable->first; currentNode != NULL; 
+            currentNode = currentNode -> nextNode) {
+        if (strcmp(currentNode->key, pcKey) == 0) {
             return 1;
         }
     }
@@ -122,14 +129,15 @@ int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
 }
 
 void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
-    struct node *p;
+    struct node *currentNode;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
     /* loops through all the nodes in search for pcKey*/
-    for (p = oSymTable->first; p != NULL; p = p -> nextNode) {
-        if (strcmp(p->key, pcKey) == 0) {
-            return (void*) p->value;
+    for (currentNode = oSymTable->first; currentNode != NULL; 
+            currentNode = currentNode -> nextNode) {
+        if (strcmp(currentNode->key, pcKey) == 0) {
+            return (void*) currentNode->value;
         } 
     }
     return NULL;
