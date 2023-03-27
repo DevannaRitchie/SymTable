@@ -81,7 +81,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
         return 0;
     }
     /*ready to fill the node*/
-    p->key = strcpy(p->key, pcKey);
+    p->key = strcpy((char*) p->key, pcKey);
     p->value = pvValue;
     /* adds p to the beginning of the list*/
     p->nextNode = oSymTable->first;

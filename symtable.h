@@ -3,8 +3,8 @@
 /* Author: Devanna Ritchie                                            */
 /*--------------------------------------------------------------------*/
 
-#ifndef SYMTABLE_INCLUDED;
-#define SYMTABLE_INCLUDED;
+#ifndef SYMTABLE_INCLUDED
+#define SYMTABLE_INCLUDED
 #include <stddef.h>
 
 /* A SymTable_T is a collection of bindings, each binding consisting of a key and a value. */
