@@ -194,7 +194,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
             /* relink the list*/
             /*if prevNode is at the beginning of the list*/
             if (prevNode == NULL) {
-                oSymTable->firstNodes[hashIndex] = currentNode->nextNode;
+                oSymTable->firstNodes[hashIndex] = (struct node**) currentNode->nextNode;
             }
             else {
                 prevNode->nextNode = currentNode->nextNode;
@@ -216,11 +216,10 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
      const void *pvExtra) {
         /* traveling node*/
         struct node *currentNode;
-        size_t hashIndex = SymTable_hash(currentNode->key, 509);
         assert(oSymTable != NULL);
         assert(pfApply != NULL);
 
-        for (currentNode = (struct node*) oSymTable->firstNodes[hashIndex]; 
+        for (currentNode = (struct node*) oSymTable->firstNodes[0]; 
                currentNode != NULL; currentNode = currentNode->nextNode)
       (*pfApply)(currentNode->key, (void*)currentNode->value, (void*)pvExtra);
      }
