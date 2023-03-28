@@ -95,9 +95,9 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
-    size_t hashIndex = SymTable_hash(currentNode->key, 509);
+    size_t hashIndex = SymTable_hash(pcKey, 509);
     /* loops through all the nodes in search for pcKey*/
-    for (currentNode = oSymTable->firstNodes[hashIndex]; currentNode != NULL; 
+    for (currentNode = (struct node*) oSymTable->firstNodes[hashIndex]; currentNode != NULL; 
             currentNode = currentNode -> nextNode) {
         if (strcmp(currentNode->key, pcKey) == 0) {
             return 0;
@@ -119,7 +119,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
     currentNode->key = strcpy((char*) currentNode->key, pcKey);
     currentNode->value = pvValue;
     /* adds p to the beginning of the list*/
-    currentNode->nextNode = oSymTable->firstNodes[0];
+    currentNode->nextNode = (struct node*) oSymTable->firstNodes[0];
     oSymTable->firstNodes[0] = currentNode;
     oSymTable->length++;
     return 1;
@@ -132,10 +132,10 @@ void *SymTable_replace(SymTable_T oSymTable, const char *pcKey, const void *pvVa
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
-    size_t hashIndex = SymTable_hash(currentNode->key, 509);
+    size_t hashIndex = SymTable_hash(pcKey, 509);
 
 /* loops through all the nodes in search for pcKey*/
-for (currentNode = oSymTable->firstNodes[hashIndex]; currentNode != NULL; 
+for (currentNode = (struct node*) oSymTable->firstNodes[hashIndex]; currentNode != NULL; 
         currentNode = currentNode -> nextNode) {
         if (strcmp(currentNode->key, pcKey) == 0) {
             oldValue = currentNode->value;
@@ -152,9 +152,9 @@ int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
-    size_t hashIndex = SymTable_hash(currentNode->key, 509);
+    size_t hashIndex = SymTable_hash(pcKey, 509);
 
-    for (currentNode = oSymTable->firstNodes[hashIndex]; currentNode != NULL; 
+    for (currentNode = (struct node*) oSymTable->firstNodes[hashIndex]; currentNode != NULL; 
             currentNode = currentNode -> nextNode) {
         if (strcmp(currentNode->key, pcKey) == 0) {
             return 1;
@@ -168,10 +168,10 @@ void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
-    size_t hashIndex = SymTable_hash(currentNode->key, 509);
+    size_t hashIndex = SymTable_hash(pcKey, 509);
 
     /* loops through all the nodes in search for pcKey*/
-    for (currentNode = oSymTable->firstNodes[hashIndex]; currentNode != NULL; 
+    for (currentNode = (struct node*) oSymTable->firstNodes[hashIndex]; currentNode != NULL; 
             currentNode = currentNode -> nextNode) {
         if (strcmp(currentNode->key, pcKey) == 0) {
             return (void*) currentNode->value;
@@ -186,9 +186,9 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
     struct node *prevNode = NULL;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-    size_t hashIndex = SymTable_hash(currentNode->key, 509);
+    size_t hashIndex = SymTable_hash(pcKey, 509);
      /* loops through all the nodes in search for pcKey*/
-    for (currentNode = oSymTable->firstNodes[hashIndex]; currentNode != NULL; 
+    for (currentNode = (struct node*) oSymTable->firstNodes[hashIndex]; currentNode != NULL; 
             currentNode = currentNode -> nextNode) {
         if (strcmp(currentNode->key, pcKey) == 0) {
             const void* oldValue;
@@ -223,7 +223,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
         assert(pfApply != NULL);
 
         size_t hashIndex = SymTable_hash(currentNode->key, 509);
-        for (currentNode = oSymTable->firstNodes[hashIndex]; 
+        for (currentNode = (struct node*) oSymTable->firstNodes[hashIndex]; 
                currentNode != NULL; currentNode = currentNode->nextNode)
       (*pfApply)(currentNode->key, (void*)currentNode->value, (void*)pvExtra);
      }
