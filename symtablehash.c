@@ -10,8 +10,6 @@
 
 
 
-
-
 /* Return a hash code for pcKey that is between 0 and uBucketCount-1,
    inclusive. */
 
@@ -73,8 +71,9 @@ void SymTable_free(SymTable_T oSymTable) {
    struct node *currentNode;
    struct node *nextNode;
    assert(oSymTable != NULL);
-   size_t hashIndex = SymTable_hash(currentNode->key, 509);
-   for (currentNode = oSymTable->firstNodes[hashIndex];
+
+
+   for (currentNode = oSymTable->firstNodes[0];
         currentNode != NULL;
         currentNode = nextNode)
    {

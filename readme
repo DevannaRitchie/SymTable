@@ -3,8 +3,7 @@ Assignment 3 readme File
 ------------------------------------------------------------------------
 What is your name?
 
-
-
+My name is Devanna Ritchie.
 ------------------------------------------------------------------------
 What authorized sources of information did you use to complete the
 assignment? COPY THE LIST of authorized sources of information given
@@ -12,6 +11,24 @@ in the "Policies" web page (also available on armlab in the file
 ~cos217/AuthorizedSourcesList ) to this section of the readme file,
 and edit it as appropriate.
 
+The course's lectures.
+
+The course's precepts.
+
+The course's website.
+
+Documents that are referenced directly by the course's website. 
+Such documents include the course's lecture slides and precept handouts.
+
+The course's textbooks.
+
+The course's current staff members outside of class time through office hours.
+
+The course's current staff members outside of class time through meetings.
+
+The course's current staff members outside of class time through Ed.
+
+The course's current staff members outside of class time through e-mail.
 
 
 ------------------------------------------------------------------------
@@ -27,11 +44,11 @@ to the Committee on Discipline. Write "None" if you used no
 unauthorized sources of information.
 
 
-
+None.
 ------------------------------------------------------------------------
 What is your assessment of the assignment? Was it helpful? Was it fun?
 
-
+This assignment was difficult.
 
 ------------------------------------------------------------------------
 (optional) What information can you provide about your submission that
@@ -47,14 +64,14 @@ disagreement after each warning. If there are no warnings, then write
 "None."
 
 
-
+None.
 ------------------------------------------------------------------------
 What warnings does critTer generate on symtablelist.c, and what are your
 disagreements with them? Copy the critTer warnings here, and express
 your disagreement after each warning. If there are no warnings, then
 write "None."
 
-symtablelist.c: line 60: medium priority:
+   symtablelist.c: line 60: medium priority:
    Do you want to validate 'pvValue' through an assert?
 
    symtablelist.c: line 92: medium priority:
@@ -88,10 +105,10 @@ implementation, (2) your non-expanding hash table implementation, and
 (3) your expanding hash table implementation? Fill in the blanks.
 
 The linked list implementation with:
--- 50 bindings consumed ________ seconds.
--- 500 bindings consumed ________ seconds.
--- 5000 bindings consumed ________ seconds.
--- 50000 bindings consumed ________ seconds.
+-- 50 bindings consumed 0.000000 seconds.
+-- 500 bindings consumed 0.004517 seconds.
+-- 5000 bindings consumed 1.028281 seconds.
+-- 50000 bindings consumed 101.748547 seconds.
 -- 500000 bindings consumed ________ seconds.
 
 The non-expanding hash table implementation with:
