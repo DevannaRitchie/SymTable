@@ -73,7 +73,7 @@ void SymTable_free(SymTable_T oSymTable) {
    assert(oSymTable != NULL);
 
 
-   for (currentNode = oSymTable->firstNodes[0];
+   for (currentNode = (struct node*) oSymTable->firstNodes[0];
         currentNode != NULL;
         currentNode = nextNode)
    {
@@ -92,10 +92,9 @@ size_t SymTable_getLength(SymTable_T oSymTable) {
 
 int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
     struct node *currentNode;
+    size_t hashIndex = SymTable_hash(pcKey, 509);
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-
-    size_t hashIndex = SymTable_hash(pcKey, 509);
     /* loops through all the nodes in search for pcKey*/
     for (currentNode = (struct node*) oSymTable->firstNodes[hashIndex]; currentNode != NULL; 
             currentNode = currentNode -> nextNode) {
@@ -120,7 +119,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
     currentNode->value = pvValue;
     /* adds p to the beginning of the list*/
     currentNode->nextNode = (struct node*) oSymTable->firstNodes[0];
-    oSymTable->firstNodes[0] = currentNode;
+    oSymTable->firstNodes[0] = (struct node**) currentNode;
     oSymTable->length++;
     return 1;
 }
@@ -129,10 +128,9 @@ void *SymTable_replace(SymTable_T oSymTable, const char *pcKey, const void *pvVa
     /* traveling node*/
     struct node *currentNode;
     const void* oldValue;
+    size_t hashIndex = SymTable_hash(pcKey, 509);
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-
-    size_t hashIndex = SymTable_hash(pcKey, 509);
 
 /* loops through all the nodes in search for pcKey*/
 for (currentNode = (struct node*) oSymTable->firstNodes[hashIndex]; currentNode != NULL; 
@@ -149,10 +147,9 @@ for (currentNode = (struct node*) oSymTable->firstNodes[hashIndex]; currentNode 
 
 int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
     struct node *currentNode;
+    size_t hashIndex = SymTable_hash(pcKey, 509);
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-
-    size_t hashIndex = SymTable_hash(pcKey, 509);
 
     for (currentNode = (struct node*) oSymTable->firstNodes[hashIndex]; currentNode != NULL; 
             currentNode = currentNode -> nextNode) {
@@ -165,10 +162,9 @@ int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
 
 void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
     struct node *currentNode;
+    size_t hashIndex = SymTable_hash(pcKey, 509);
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-
-    size_t hashIndex = SymTable_hash(pcKey, 509);
 
     /* loops through all the nodes in search for pcKey*/
     for (currentNode = (struct node*) oSymTable->firstNodes[hashIndex]; currentNode != NULL; 
@@ -184,9 +180,10 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
     /*traveling node*/
     struct node *currentNode;
     struct node *prevNode = NULL;
+    size_t hashIndex = SymTable_hash(pcKey, 509);
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-    size_t hashIndex = SymTable_hash(pcKey, 509);
+    
      /* loops through all the nodes in search for pcKey*/
     for (currentNode = (struct node*) oSymTable->firstNodes[hashIndex]; currentNode != NULL; 
             currentNode = currentNode -> nextNode) {
@@ -219,10 +216,10 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
      const void *pvExtra) {
         /* traveling node*/
         struct node *currentNode;
+        size_t hashIndex = SymTable_hash(currentNode->key, 509);
         assert(oSymTable != NULL);
         assert(pfApply != NULL);
 
-        size_t hashIndex = SymTable_hash(currentNode->key, 509);
         for (currentNode = (struct node*) oSymTable->firstNodes[hashIndex]; 
                currentNode != NULL; currentNode = currentNode->nextNode)
       (*pfApply)(currentNode->key, (void*)currentNode->value, (void*)pvExtra);
